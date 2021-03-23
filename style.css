@@ -8,7 +8,7 @@
     flex-direction: column;
     height: 100vh;
     width: 100vw;
-    background-color: rgb(19, 19, 19);
+    background-color: rgb(48, 48, 48);
 }
 
 #heading {
@@ -25,7 +25,8 @@
     margin: auto;
     height: 600px;
     width: 600px;
-    background-color: grey;
+    background-color: rgb(24, 34, 56);
+    border: 4px solid white;
 }
 
 #scores {
@@ -53,11 +54,13 @@
 
 .food {
     background-color: red;
+    border: 8px double black;
     border-radius: 100%;
 }
 
 .snake {
     background-color: gold;
+    border: 4px solid black;
     border-radius: 100%;
 }
 
