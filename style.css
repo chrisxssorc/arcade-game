@@ -1,0 +1,68 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgb(19, 19, 19);
+}
+
+#heading {
+    color: white;
+    text-align: center;
+    font-size: 3rem;
+    margin: auto;
+}
+
+#canvas {
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    margin: auto;
+    height: 600px;
+    width: 600px;
+    background-color: grey;
+}
+
+#scores {
+    display: grid;
+    grid-template-columns: 400px 1fr 1fr 1fr 1fr 400px;
+    justify-items: end;
+    color: white;
+    font-size: 2.5rem;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+#current-score {
+    grid-column: 2 / 3;
+}
+#current-score-value {
+    grid-column: 3 / 4;
+}
+#best-score {
+    grid-column: 4 / 5;
+}
+#best-score-value {
+    grid-column: 5 / 6;
+}
+
+.food {
+    background-color: red;
+    border-radius: 100%;
+}
+
+.snake {
+    background-color: gold;
+    border-radius: 100%;
+}
+
+.dead {
+    background-color: black;
+    border: 4px solid red;
+    border-radius: 100%;
+}
