@@ -33,10 +33,16 @@ let snake = {
 // initial score
 let gameScore = 0
 
+// list of highscores
+let highscore = []
+
 // builds the initial game state that starts the game
 function buildInitialState(){
     renderState()
     buildSnake()
+    updateScore()
+    loadHighscore()
+    displayHighscore()
     spawnFood()
 }
 
@@ -58,8 +64,6 @@ function renderState(){
 // adds one to the current score and changes the current score on the page
 // if the current score is also the best score, update the best score on page as well
 function updateScore(){
-    gameScore += 1
-
     $('#current-score-value').text(gameScore)
 
     if (gameScore > Number($('#best-score-value').text())){
@@ -67,14 +71,33 @@ function updateScore(){
     }
 }
 
-// load best score from localStorage
-function loadBestScore(){
-
+// display the highscores on the highscore list
+function displayHighscore(){
+    highscore.forEach(function(score, scoreIndex){
+        $(`.highscore${scoreIndex + 1}`).text(`${scoreIndex + 1}. ${score}`)
+    })
 }
 
-// save best score to localStorage
-function saveBestScore(){
+// load highscores from localStorage
+function loadHighscore(){
+    highscore = localStorage.getItem('highscore')
+    ? JSON.parse(localStorage.getItem('highscore'))
+    : ['', '', '', '', '']
 
+    displayHighscore()
+}
+
+// save highscores to localStorage
+function saveHighscore(){
+    highscore.push(gameScore)
+    highscore.sort(function(a,b){
+        return b - a
+    })
+    if (highscore.length > 5){
+        highscore.splice(5)
+    }
+
+    localStorage.setItem('highscore', JSON.stringify(highscore))
 }
 
 // creates a snake from its body coordinates
@@ -100,9 +123,7 @@ function updateSnake(){
 
     snake.body.push([newSegmentX, newSegmentY])
 
-    if (selfCollide(newSegmentX, newSegmentY) || outOfBounds(newSegmentX, newSegmentY)){
-        gameover()
-    }
+    checkGameover(newSegmentX, newSegmentY)
 }
 
 // if it eats food, add to head without removing tail and update the score
@@ -112,6 +133,7 @@ function growSnake(){
 
     snake.body.push([newSegmentX, newSegmentY])
 
+    gameScore += 1
     updateScore()
 }
 
@@ -156,9 +178,28 @@ function outOfBounds(coordX, coordY){
     return coordX < 0 || coordX > 19 || coordY < 0 || coordY > 19
 }
 
-// if gameover happens, stop the game and show end screen
+// check if a gameover has happened
+// if it did, reset the snake and score
+function checkGameover(newSegmentX, newSegmentY){
+    if (selfCollide(newSegmentX, newSegmentY) || outOfBounds(newSegmentX, newSegmentY)){
+        gameover()
+
+        gameScore = 0
+        snake = {
+            body: [ [10, 2], [10, 3], [10, 4], [10, 5] ],
+            nextDirection: [0, 1]
+        }
+    }
+}
+
+// if gameover happens, stop the game, save highscores, and show end screen
 function gameover(){
     clearInterval(snakeGame)
+    saveHighscore()
+    displayHighscore()
+
+    snakeGame = false
+
     $('.snake').addClass('dead')
 
     $('#heading').text('GAME OVER')
@@ -173,12 +214,10 @@ function tick(){
     } else{
         updateSnake()
     }
-
-    buildSnake()
+    if (snakeGame !== false){
+        buildSnake()
+    }
 }
-
-// the tick interval
-const snakeGame = setInterval(tick, 200)
 
 // listener for keydown events, changes direction of the snake when arrow keys pressed
 // does not allow the snake to change direction into itself
@@ -194,5 +233,16 @@ $(window).on('keydown', function (event){
     }
 })
 
+// the tick interval
+let snakeGame;
+
+function startGame(){
+    snakeGame = setInterval(tick, 200)
+    return snakeGame
+}
+
 // build the initial state and start the game
-buildInitialState()
+$('#new-game-button').click(function(){
+    buildInitialState()
+    startGame()
+})

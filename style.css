@@ -18,15 +18,57 @@
     margin: auto;
 }
 
+#game-area {
+    display: grid;
+    grid-template-columns: 1fr 600px 1fr;
+}
+
+#start-buttons {
+    grid-column: 1 / 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#new-game-button {
+    outline: none;
+    padding: 10px;
+    background-color: red;
+    color: white;
+    border: 2px solid white;
+    font-size: 1.5rem;
+}
+
+#new-game-button:active {
+    background-color: rgb(185, 0, 0);
+}
+
 #canvas {
     display: grid;
+    grid-column: 2 / 3;
     grid-template-columns: repeat(20, 1fr);
     grid-template-rows: repeat(20, 1fr);
     margin: auto;
+    margin-bottom: 15px;
     height: 600px;
     width: 600px;
     background-color: rgb(24, 34, 56);
     border: 4px solid white;
+}
+
+#highscore-board {
+    grid-column: 3 / 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#highscore-list {
+    padding: 10px;
+    border: 2px solid white;
+    color: white;
+    font-size: 2rem;
 }
 
 #scores {
