@@ -31,8 +31,15 @@
     justify-content: center;
 }
 
+#start-buttons h2 {
+    margin: 10px;
+    color: white;
+    font-size: 2rem;
+}
+
 #new-game-button {
     outline: none;
+    margin: 10px;
     padding: 10px;
     background-color: red;
     color: white;
@@ -41,6 +48,20 @@
 }
 
 #new-game-button:active {
+    background-color: rgb(185, 0, 0);
+}
+
+#hard-game-button{
+    outline: none;
+    margin: 10px;
+    padding: 10px;
+    background-color: red;
+    color: white;
+    border: 2px solid white;
+    font-size: 1.5rem;
+}
+
+#hard-game-button:active {
     background-color: rgb(185, 0, 0);
 }
 
@@ -65,15 +86,22 @@
 }
 
 #highscore-list {
-    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px;
     border: 2px solid white;
     color: white;
     font-size: 2rem;
+    width: 200px;
+}
+
+.highscore {
+    width: 100px;
 }
 
 #scores {
     display: grid;
-    grid-template-columns: 400px 1fr 1fr 1fr 1fr 400px;
+    grid-template-columns: 455px 1fr 1fr 1fr 1fr 455px;
     justify-items: end;
     color: white;
     font-size: 2.5rem;

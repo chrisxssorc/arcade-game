@@ -38,6 +38,13 @@ let highscore = []
 
 // builds the initial game state that starts the game
 function buildInitialState(){
+    $('#heading').text('SNAKE').css('color', 'white')
+    gameScore = 0
+    snake = {
+        body: [ [10, 2], [10, 3], [10, 4], [10, 5] ],
+        nextDirection: [0, 1]
+    }
+
     renderState()
     buildSnake()
     updateScore()
@@ -74,7 +81,8 @@ function updateScore(){
 // display the highscores on the highscore list
 function displayHighscore(){
     highscore.forEach(function(score, scoreIndex){
-        $(`.highscore${scoreIndex + 1}`).text(`${scoreIndex + 1}. ${score}`)
+        $(`#highscore${scoreIndex + 1}`).text(`${score}`)
+        $(`#highscore${scoreIndex + 1}`).css('text-align', 'right')
     })
 }
 
@@ -202,7 +210,7 @@ function gameover(){
 
     $('.snake').addClass('dead')
 
-    $('#heading').text('GAME OVER')
+    $('#heading').text('GAME OVER').css('color', 'red')
 }
 
 // every tick updates the snake
@@ -233,16 +241,35 @@ $(window).on('keydown', function (event){
     }
 })
 
-// the tick interval
+// tick interval variable declaration
 let snakeGame;
 
+// the tick interval for easy game
 function startGame(){
-    snakeGame = setInterval(tick, 200)
-    return snakeGame
+    clearInterval(snakeGame)
+    snakeGame = setInterval(tick, 250)
 }
 
-// build the initial state and start the game
+// build the initial state and start the easy game
 $('#new-game-button').click(function(){
     buildInitialState()
     startGame()
 })
+
+// the tick interval for hard game
+function startHardGame(){
+    clearInterval(snakeGame)
+    snakeGame = setInterval(tick, 100)
+}
+
+// build the initial state and start the hard game
+$('#hard-game-button').click(function(){
+    buildInitialState()
+    startHardGame()
+})
+
+renderState()
+buildSnake()
+updateScore()
+loadHighscore()
+displayHighscore()
