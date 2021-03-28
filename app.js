@@ -268,6 +268,7 @@ $('#hard-game-button').click(function(){
     startHardGame()
 })
 
+// set up game page before game has started
 renderState()
 buildSnake()
 updateScore()
